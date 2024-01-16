@@ -44,7 +44,10 @@
 
     <div class="item">
       <span class="label">Registry:</span>
-      <span class="value"><a href={offset.registry_url} target="_blank">{offset.registry}</a></span>
+      <span class="value"
+        ><a href={offset.registry_url} target="_blank">{offset.registry}</a
+        ></span
+      >
     </div>
 
     <div class="item">
@@ -69,23 +72,29 @@
     /* border-bottom: 1px solid var(--fg); */
   }
 
-  .meta{
+  .meta {
     width: 30%;
     /* padding-top: 1.3rem; */
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
-  .body{
+
+  .body {
     width: 70%;
   }
+
   .meta {
-    text-align: left;
-    padding-right: 2rem;
+    text-align: right;
+    padding-right: 1rem;
   }
+
   .label {
     color: #999;
   }
+
   .item {
     border-bottom: 1px solid #ccc;
+    /* margin-bottom: 0.3rem; */
+    padding: 0.3rem;
   }
 
   .desc {

@@ -1,8 +1,9 @@
 <script>
-  import { goto } from "$app/navigation";
-  import offsetData from "../data.json";
+  // import offsetData from "../data.json";
+  import { onMount, tick } from "svelte";
   import Project from "$lib/Project.svelte";
   export let data;
+  let offsetData = [];
   let q = data.q;
   let start = data.start;
   let count = data.count;
@@ -13,30 +14,73 @@
   let methodologies = {};
   let projectTypes = {};
   let form;
+  let loading = false;
 
-  function subForm() {
+  async function subForm() {
+    start = 0;
+    await tick();
     form.requestSubmit();
   }
 
   function clearForm() {
     q = "";
     start = 0;
-    count = 100;
+    count = 50;
     projectTypeFilter = null;
     methodologyFilter = null;
     sortKey = "name";
     sortOrder = "asc";
   }
 
-  offsetData.forEach((p, i) => {
-    p.id = i;
-    methodologies[p.methodology] = methodologies[p.methodology]
-      ? methodologies[p.methodology] + 1
-      : 1;
-    projectTypes[p.project_type] = projectTypes[p.project_type]
-      ? projectTypes[p.project_type] + 1
-      : 1;
+  async function nextPage() {
+    start += count;
+    if (start > total) start = total - count;
+    await tick();
+    form.requestSubmit();
+  }
+
+  async function prevPage() {
+    start -= count;
+    if (start < 0) start = 0;
+    await tick();
+    form.requestSubmit();
+  }
+
+  onMount(async () => {
+    console.log("loading");
+    loading = true;
+    let _methodologies = {};
+    let _projectTypes = {};
+
+    const res = await fetch(`/offset.json`);
+
+    offsetData = await res.json();
+
+    offsetData.forEach((p, i) => {
+      p.id = i;
+      _methodologies[p.methodology] = _methodologies[p.methodology]
+        ? _methodologies[p.methodology] + 1
+        : 1;
+      _projectTypes[p.project_type] = _projectTypes[p.project_type]
+        ? _projectTypes[p.project_type] + 1
+        : 1;
+    });
+
+    methodologies = _methodologies;
+    projectTypes = _projectTypes;
+
+    loading = false;
   });
+
+  // offsetData.forEach((p, i) => {
+  //   p.id = i;
+  //   methodologies[p.methodology] = methodologies[p.methodology]
+  //     ? methodologies[p.methodology] + 1
+  //     : 1;
+  //   projectTypes[p.project_type] = projectTypes[p.project_type]
+  //     ? projectTypes[p.project_type] + 1
+  //     : 1;
+  // });
 
   const sortKeys = [
     { key: "name", text: "Name" },
@@ -79,11 +123,7 @@
 
   $: offsetsSlice = offsets.slice(start, start + count);
 
-  // console.log(offsets.length)
-
   $: total = offsets.length;
-
-  console.log(total);
 </script>
 
 <div class="project-container">
@@ -95,7 +135,10 @@
         name="q"
         autofocus
         bind:value={q}
-        on:keyup={() => form.requestSubmit()}
+        on:keyup={() => {
+          start = 0;
+          form.requestSubmit();
+        }}
       />
     </div>
 
@@ -152,18 +195,39 @@
     </div>
 
     <div class="filter">
-      <button on:click={clearForm}>Clear</button>
+      <button on:click={clearForm}>Reset</button>
       <button type="submit">Apply</button>
     </div>
+    <input type="hidden" name="start" bind:value={start} />
   </form>
 
   <div class="offsets">
-    <p>{start + 1} to {start + Math.min(count, total)} of {total}</p>
-    <div class="offsets-inner">
-      {#each offsetsSlice as offset (offset.id)}
-        <Project {offset} {q} />
-      {/each}
-    </div>
+    {#if loading}
+      <div>Loading...</div>
+    {:else}
+      <div class="pagination">
+        <div class="page-counts">
+          {#if total > 0}
+            {start + 1} to {start + Math.min(count, total)} of {total}
+          {:else}
+            No results found.
+          {/if}
+        </div>
+        <div class="page-buttons">
+          {#if start > 0}
+            <button on:click={prevPage}>Prev</button>
+          {/if}
+          {#if start + count < total}
+            <button on:click={nextPage}>Next</button>
+          {/if}
+        </div>
+      </div>
+      <div class="offsets-inner">
+        {#each offsetsSlice as offset (offset.id)}
+          <Project {offset} {q} />
+        {/each}
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -203,5 +267,17 @@
   }
   button[type="submit"] {
     background-color: var(--theme1);
+  }
+
+  .pagination {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .pagination button {
+    display: inline-block;
+    width: auto;
   }
 </style>
