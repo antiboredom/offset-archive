@@ -77,3 +77,10 @@ header nav a:hover,
 header nav a.active {
   background-color: var(--theme1);
 }
+
+article {
+  max-width: 700px;
+  font-size: 18px;
+  margin: auto;
+  line-height: 1.3;
+}

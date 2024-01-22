@@ -1,3 +1,29 @@
+import offsetData from "../data.json";
+
+const methodologies = {};
+const projectTypes = {};
+offsetData.forEach((p, i) => {
+  p.id = i;
+
+  if (!p.name) p.name = "No Name";
+  if (!p.description) p.description = "No Description";
+
+  const pMethodologies = p.methodology
+    ? p.methodology.split(";").map((m) => m.trim())
+    : ["Unknown"];
+  const pTypes = p.project_type
+    ? p.project_type.split(";").map((m) => m.trim())
+    : ["Unknown"];
+
+  pMethodologies.forEach((m) => {
+    methodologies[m] = methodologies[m] ? methodologies[m] + 1 : 1;
+  });
+
+  pTypes.forEach((t) => {
+    projectTypes[t] = projectTypes[t] ? projectTypes[t] + 1 : 1;
+  });
+});
+
 export async function load({ url }) {
   let start = url.searchParams.get("start") || 0;
   start = +start;
@@ -14,33 +40,61 @@ export async function load({ url }) {
 
   let projectTypeFilter = url.searchParams.get("projectType") || null;
 
+  let registryFilter = url.searchParams.get("registry") || null;
+
   let q = url.searchParams.get("q") || "";
 
-  // let offsets = offsetData
-  //   .filter((p) => {
-  //     if (q == "") {
-  //       return true;
-  //     }
-  //
-  //     if (!p.name) p.name = "";
-  //
-  //     return (
-  //       p.name.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
-  //       p.description.toLowerCase().indexOf(q.toLowerCase()) > -1
-  //     );
-  //   })
-  //   .slice(start, start + count);
-  // let total = offsets.length;
-  // if (!q) total = offsetData.length;
+  const offsets = [...offsetData]
+    .sort((a, b) => {
+      const comp = sortOrder === "asc" ? 1 : -1;
+      if (a[sortKey] < b[sortKey]) {
+        return -1 * comp;
+      }
+      if (a[sortKey] > b[sortKey]) {
+        return 1 * comp;
+      }
+      return a.id - b.id;
+    })
+    .filter((p) => {
+      if (q == "") {
+        return true;
+      }
 
-  // return { start, count, q, offsets, total };
+      return (
+        p.name.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
+        p.description.toLowerCase().indexOf(q.toLowerCase()) > -1
+      );
+    })
+    .filter((p) => {
+      if (methodologyFilter === null) return true;
+
+      return p.methodology == methodologyFilter;
+    })
+    .filter((p) => {
+      if (projectTypeFilter === null) return true;
+
+      return p.project_type == projectTypeFilter;
+    })
+    .filter((p) => {
+      if (registryFilter === null) return true;
+
+      return p.registry == registryFilter;
+    });
+
+  const offsetsSlice = offsets.slice(start, start + count);
+
   return {
+    total: offsets.length,
+    offsetsSlice,
     start,
     count,
     q,
     sortKey,
     methodologyFilter,
-    sortOrder,
     projectTypeFilter,
+    registryFilter,
+    methodologies,
+    projectTypes,
+    sortOrder,
   };
 }

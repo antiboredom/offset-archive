@@ -8,8 +8,9 @@
   <nav>
     <a href="/" class:active={$page.url.pathname === "/"}>Projects</a>
     <a href="/sales" class:active={$page.url.pathname === "/sales"}>Sales</a>
-    <a href="/methodologies" class:active={$page.url.pathname === "/methodologies"}
-      >Methodologies</a
+    <a
+      href="/methodologies"
+      class:active={$page.url.pathname === "/methodologies"}>Methodologies</a
     >
     <a href="/about" class:active={$page.url.pathname === "/about"}>About</a>
   </nav>

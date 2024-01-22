@@ -1,20 +1,30 @@
 <script>
-  // import offsetData from "../data.json";
-  import { onMount, tick } from "svelte";
+  import { tick } from "svelte";
   import Project from "$lib/Project.svelte";
+  import {registryNames} from "$lib/registries.js";
+
   export let data;
-  let offsetData = [];
+
   let q = data.q;
   let start = data.start;
   let count = data.count;
   let sortKey = data.sortKey;
   let methodologyFilter = data.methodologyFilter;
   let projectTypeFilter = data.projectTypeFilter;
+  let registryFilter = data.registryFilter;
   let sortOrder = data.sortOrder;
-  let methodologies = {};
-  let projectTypes = {};
+  let methodologies = data.methodologies;
+  let projectTypes = data.projectTypes;
   let form;
   let loading = false;
+
+  $: offsetsSlice = data.offsetsSlice;
+  $: total = data.total;
+
+  const sortKeys = [
+    { key: "name", text: "Name" },
+    { key: "total_credits", text: "Total Credits Issued" },
+  ];
 
   async function subForm() {
     start = 0;
@@ -28,6 +38,7 @@
     count = 50;
     projectTypeFilter = null;
     methodologyFilter = null;
+    registryFilter = null;
     sortKey = "name";
     sortOrder = "asc";
   }
@@ -45,89 +56,10 @@
     await tick();
     form.requestSubmit();
   }
-
-  onMount(async () => {
-    console.log("loading");
-    loading = true;
-    let _methodologies = {};
-    let _projectTypes = {};
-
-    const res = await fetch(`/offset.json`);
-
-    offsetData = await res.json();
-
-    offsetData.forEach((p, i) => {
-      p.id = i;
-      _methodologies[p.methodology] = _methodologies[p.methodology]
-        ? _methodologies[p.methodology] + 1
-        : 1;
-      _projectTypes[p.project_type] = _projectTypes[p.project_type]
-        ? _projectTypes[p.project_type] + 1
-        : 1;
-    });
-
-    methodologies = _methodologies;
-    projectTypes = _projectTypes;
-
-    loading = false;
-  });
-
-  // offsetData.forEach((p, i) => {
-  //   p.id = i;
-  //   methodologies[p.methodology] = methodologies[p.methodology]
-  //     ? methodologies[p.methodology] + 1
-  //     : 1;
-  //   projectTypes[p.project_type] = projectTypes[p.project_type]
-  //     ? projectTypes[p.project_type] + 1
-  //     : 1;
-  // });
-
-  const sortKeys = [
-    { key: "name", text: "Name" },
-    { key: "total_credits", text: "Total Credits Issued" },
-  ];
-
-  $: offsets = [...offsetData]
-    .sort((a, b) => {
-      const comp = sortOrder === "asc" ? 1 : -1;
-      if (a[sortKey] < b[sortKey]) {
-        return -1 * comp;
-      }
-      if (a[sortKey] > b[sortKey]) {
-        return 1 * comp;
-      }
-      return a.id - b.id;
-    })
-    .filter((p) => {
-      if (q == "") {
-        return true;
-      }
-
-      if (!p.name) p.name = "";
-
-      return (
-        p.name.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
-        p.description.toLowerCase().indexOf(q.toLowerCase()) > -1
-      );
-    })
-    .filter((p) => {
-      if (methodologyFilter === null) return true;
-
-      return p.methodology == methodologyFilter;
-    })
-    .filter((p) => {
-      if (projectTypeFilter === null) return true;
-
-      return p.project_type == projectTypeFilter;
-    });
-
-  $: offsetsSlice = offsets.slice(start, start + count);
-
-  $: total = offsets.length;
 </script>
 
 <div class="project-container">
-  <form class="filters" method="GET" bind:this={form}>
+  <form class="filters" method="GET" action="/" bind:this={form}>
     <div class="filter">
       <input
         type="text"
@@ -155,6 +87,24 @@
       <select name="sortOrder" bind:value={sortOrder} on:change={subForm}>
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
+      </select>
+    </div>
+
+    <div class="filter">
+      <label for="meth">Registry</label>
+      <select
+        name="registry"
+        id="reg"
+        bind:value={registryFilter}
+        class="long-select"
+        on:change={subForm}
+      >
+        <option value={null}>All Registries</option>
+        {#each Object.keys(registryNames).sort() as r}
+          <option value={r}>
+            {registryNames[r]}
+          </option>
+        {/each}
       </select>
     </div>
 
