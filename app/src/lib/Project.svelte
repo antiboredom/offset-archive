@@ -51,10 +51,10 @@
       >
     </div>
 
-    <!-- <div class="item"> -->
-    <!--   <span class="label">ID:</span> -->
-    <!--   <span class="value">{offset.id}</span> -->
-    <!-- </div> -->
+    <div class="item">
+      <span class="label">ID:</span>
+      <span class="value">{offset.registry_id}</span>
+    </div>
   </div>
 
   <div class="body">

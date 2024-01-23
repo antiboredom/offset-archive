@@ -2,17 +2,28 @@
   <h2>About</h2>
 
   <p>
-    to do be written...
-    Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim
-    labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet.
-    Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum
-    Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.
-    Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex
-    occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat
-    officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in
-    Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non
-    excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut
-    ea consectetur et est culpa et culpa duis.
+    The Offset Archive is a searchable database of every project listed in the
+    four major carbon registories: American Carbon Registry (ACR), Climate
+    Action Reserve (CAR), Gold Standard, and Verra. These platforms make up the
+    majority of the voluntary carbon market and record lists of various carbon
+    offsetting projects, as well as the different methodologies that underlie
+    them. The voluntary market is one of two distinct domains for carbon
+    offsetting today and is open to the public to develop or purchase carbon
+    offsetting products. The other domain is the mandatory or “compliance”
+    marketplaces that form part of regulatory schemes run by governments and
+    which are the basis for reaching international climate commitments. Despite
+    high hopes at the most recent COP meeting in 2023 for regulation of
+    voluntary carbon market, an agreement on key rules for carbon trading was
+    not reached. Voluntary markets remain unregulated by the UN or governmental
+    bodies.
   </p>
 
+  <p>
+    This database has been scraped and designed by Sam Lavigne. Sales or
+    "retirement" data is from <a
+      href="https://gspp.berkeley.edu/research-and-impact/centers/cepp/projects/berkeley-carbon-trading-project"
+      >The Berkeley Carbon Trading Project</a
+    >. The Offset Archive is part of a collaborative artistic research project
+    <em>Offset</em>, by Tega Brain and Sam Lavigne.
+  </p>
 </article>
