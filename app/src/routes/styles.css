@@ -4,12 +4,17 @@
 
 :root {
   margin: 0;
-  --theme1: #00ff37;
+  /* --theme1: #00ff37; */
+  --theme1: #aae6aa;
   --fg: #000000;
   --bg: #ffffff;
 
   color: var(--fg);
   background-color: var(--bg);
+}
+
+body {
+  margin-top: 0;
 }
 
 :root,
@@ -52,15 +57,25 @@ header {
   align-items: center;
   text-transform: uppercase;
   border-bottom: 1px solid var(--fg);
+  padding: 5px 0px;
 }
 
 header a {
   text-decoration: none;
 }
 
-header h1 {
+.logo {
   font-size: 130%;
   margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+header img {
+  height: 20px;
+  display: inline-block;
+  margin-right: 5px;
 }
 
 header nav a {

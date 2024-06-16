@@ -19,11 +19,20 @@
   </p>
 
   <p>
+    This archive is divided into two sections. The first lists all offset
+    projects which are the various intiatives listed on registries to reduce or
+    remove carbon. Each project has been approved by the registry where it is
+    listed. The second dataset consists of offset sales data. This lists every
+    entity that has bought carbon offsets from a registry.
+  </p>
+
+  <p>
     This database has been scraped and designed by Sam Lavigne. Sales or
     "retirement" data is from <a
       href="https://gspp.berkeley.edu/research-and-impact/centers/cepp/projects/berkeley-carbon-trading-project"
       >The Berkeley Carbon Trading Project</a
     >. The Offset Archive is part of a collaborative artistic research project
-    <em>Offset</em>, by Tega Brain and Sam Lavigne.
+    <em>Offset</em>, by <a href="https://lav.io">Sam Lavigne</a> and
+    <a href="https://tegabrain.com">Tega Brain</a>.
   </p>
 </article>

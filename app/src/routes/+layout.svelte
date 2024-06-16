@@ -8,7 +8,7 @@
 </svelte:head>
 
 <header>
-  <h1><a href="/">Offset Archive</a></h1>
+  <a class="logo" href="/"><img src="/logo.gif" alt="Offset logo" />Offset Archive</a>
   <nav>
     <a href="/" class:active={$page.url.pathname === "/"}>Projects</a>
     <a href="/sales" class:active={$page.url.pathname === "/sales"}>Sales</a>
