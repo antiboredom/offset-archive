@@ -177,4 +177,16 @@
     display: inline-block;
     width: auto;
   }
+  @media (max-width: 768px) {
+    .project-container {
+      display: grid;
+      grid-template-columns: 100%;
+      margin-top: 1rem;
+    }
+    .filters {
+      margin-right: 0;
+      padding-right: 0;
+      border-right: none;
+    }
+  }
 </style>
