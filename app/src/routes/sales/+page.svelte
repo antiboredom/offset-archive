@@ -114,7 +114,7 @@
       {#each salesSlice as sale}
         <tr>
           <td>{sale.id}</td>
-          <td>{sale.total}</td>
+          <td>{sale.total.toLocaleString()}</td>
           <td>{sale.date}</td>
           <td>{sale.notes}</td>
         </tr>
@@ -136,6 +136,7 @@
   th {
     border-bottom: 1px solid #000;
     padding: 10px;
+    vertical-align: top;
   }
   .project-container {
     display: grid;

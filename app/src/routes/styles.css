@@ -72,6 +72,10 @@ header a {
   align-items: center;
 }
 
+.subhead {
+  font-size: 0.9em;
+}
+
 header img {
   height: 20px;
   display: inline-block;
@@ -98,4 +102,15 @@ article {
   font-size: 18px;
   margin: auto;
   line-height: 1.3;
+}
+
+@media (max-width: 768px) {
+  .subhead {
+    display: none;
+  }
+
+  header nav a {
+    padding: 2px;
+    margin: 0px;
+  }
 }

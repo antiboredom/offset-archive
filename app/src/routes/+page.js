@@ -33,8 +33,8 @@ export async function load({ url }) {
   count = +count;
   if (count < 0 || !count) count = 50;
 
-  let sortKey = url.searchParams.get("sort") || "name";
-  let sortOrder = url.searchParams.get("sortOrder") || "asc";
+  let sortKey = url.searchParams.get("sort") || "total_credits";
+  let sortOrder = url.searchParams.get("sortOrder") || "desc";
 
   let methodologyFilter = url.searchParams.get("methodology") || null;
 
