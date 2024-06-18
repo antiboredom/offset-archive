@@ -9,6 +9,8 @@
   let sortOrder = data.sortOrder;
   let form;
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   const sortKeys = [
     { key: "notes", text: "Notes" },
     { key: "total", text: "Total Credits" },
@@ -54,7 +56,7 @@
         type="text"
         placeholder="Search"
         name="q"
-        autofocus
+        autofocus={!isMobile}
         bind:value={q}
         on:keyup={() => {
           start = 0;
