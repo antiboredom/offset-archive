@@ -80,8 +80,8 @@
     </div>
 
     <div class="filter">
-      <button on:click={clearForm}>Reset</button>
-      <button type="submit">Apply</button>
+      <button class="reset" on:click={clearForm}>Reset</button>
+      <!-- <button type="submit">Apply</button> -->
     </div>
     <input type="hidden" name="start" bind:value={start} />
   </form>
@@ -165,6 +165,9 @@
   }
   button[type="submit"] {
     background-color: var(--theme1);
+  }
+  .reset {
+    background-color: #eee;
   }
 
   .pagination {

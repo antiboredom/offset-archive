@@ -158,8 +158,8 @@
       </div>
 
       <div class="filter">
-        <button on:click={clearForm}>Reset</button>
-        <button type="submit">Apply</button>
+        <button class="reset" on:click={clearForm}>Reset</button>
+        <!-- <button type="submit">Apply</button> -->
       </div>
       <input type="hidden" name="start" bind:value={start} />
     </div>
@@ -232,6 +232,9 @@
   button[type="submit"] {
     background-color: var(--theme1);
   }
+  .reset {
+    background-color: #eee;
+  }
 
   .pagination {
     margin-bottom: 1rem;
@@ -247,6 +250,7 @@
   .toggle-filters-holder {
     display: none;
   }
+
   @media (max-width: 768px) {
     .project-container {
       grid-template-columns: 1fr;
