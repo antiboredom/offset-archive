@@ -40,8 +40,8 @@
     projectTypeFilter = null;
     methodologyFilter = null;
     registryFilter = null;
-    sortKey = "name";
-    sortOrder = "asc";
+    sortKey = "total_credits";
+    sortOrder = "desc";
   }
 
   async function nextPage() {
