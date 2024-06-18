@@ -19,8 +19,6 @@
   let loading = false;
   let showFilters = true;
 
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
   $: offsetsSlice = data.offsetsSlice;
   $: total = data.total;
 
@@ -68,7 +66,7 @@
         type="text"
         placeholder="Search"
         name="q"
-        autofocus={!isMobile}
+        autofocus
         bind:value={q}
         on:keyup={() => {
           start = 0;
