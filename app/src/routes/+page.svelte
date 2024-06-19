@@ -18,6 +18,7 @@
   let form;
   let loading = false;
   let showFilters = true;
+  let shouldAutoFocus = false;
 
   $: offsetsSlice = data.offsetsSlice;
   $: total = data.total;
@@ -66,11 +67,15 @@
         type="text"
         placeholder="Search"
         name="q"
-        autofocus
+        autofocus={shouldAutoFocus}
         bind:value={q}
         on:keyup={() => {
           start = 0;
           form.requestSubmit();
+          shouldAutoFocus = true;
+        }}
+        on:blur={() => {
+          shouldAutoFocus = false;
         }}
       />
       <div class="toggle-filters-holder">

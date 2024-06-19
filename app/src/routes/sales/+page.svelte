@@ -7,6 +7,7 @@
   let count = data.count;
   let sortKey = data.sortKey;
   let sortOrder = data.sortOrder;
+  let shouldAutoFocus = false;
   let form;
 
   const sortKeys = [
@@ -54,11 +55,15 @@
         type="text"
         placeholder="Search"
         name="q"
-        autofocus
+        autofocus={shouldAutoFocus}
         bind:value={q}
         on:keyup={() => {
           start = 0;
           form.requestSubmit();
+          shouldAutoFocus = true;
+        }}
+        on:blur={() => {
+          shouldAutoFocus = false;
         }}
       />
     </div>
