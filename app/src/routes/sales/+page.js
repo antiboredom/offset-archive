@@ -19,9 +19,9 @@ export async function load({ url }) {
   start = +start;
   if (start < 0 || !start) start = 0;
 
-  let count = url.searchParams.get("count") || 100;
+  let count = url.searchParams.get("count") || 50;
   count = +count;
-  if (count < 0 || !count) count = 100;
+  if (count < 0 || !count) count = 50;
 
   let sortKey = url.searchParams.get("sort") || "total";
   let sortOrder = url.searchParams.get("sortOrder") || "desc";
