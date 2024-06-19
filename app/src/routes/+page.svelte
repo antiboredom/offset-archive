@@ -62,6 +62,11 @@
 
 <div class="project-container">
   <form class="filters" method="GET" action="/" bind:this={form}>
+    <div class="help">
+      Offset project information has been scraped from the four major carbon
+      registries. Each entry describes a project that has been approved as an
+      offset by one of these registries.
+    </div>
     <div class="filter">
       <input
         type="text"
@@ -211,8 +216,12 @@
     padding-right: 1rem;
     border-right: 1px solid var(--fg);
   }
-  .filter {
+  .filter,
+  .help {
     margin-bottom: 1.5rem;
+  }
+  .help {
+    font-size: 0.9em;
   }
   .offsets {
     min-width: 0;

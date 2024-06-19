@@ -10,9 +10,15 @@
   let shouldAutoFocus = false;
   let form;
 
+  const URLS = [
+    "https://registry.goldstandard.org/projects/details/",
+    "https://registry.verra.org/app/projectDetail/VCS/",
+    "https://acr2.apx.com/mymodule/reg/prjView.asp?id1=",
+  ];
+
   const sortKeys = [
-    { key: "notes", text: "Notes" },
-    { key: "total", text: "Total Credits" },
+    { key: "notes", text: "Buyer Information" },
+    { key: "total", text: "Total Carbon Credits" },
     { key: "date", text: "Date" },
   ];
 
@@ -46,10 +52,23 @@
     await tick();
     form.requestSubmit();
   }
+
+  function getURL(id, type) {
+    if (type == 2) {
+      id = id.replace("ACR", "");
+    }
+    return URLS[type] + id;
+  }
 </script>
 
 <div class="project-container">
   <form class="filters" method="GET" action="/sales" bind:this={form}>
+    <div class="help">
+      Offset sales data has been sourced from The Berkeley Carbon Trading
+      Project. This dataset consists of the name of every organisation or
+      individual who has bought an offset, date of the sale, quantity of offsets
+      purchased and from which project.
+    </div>
     <div class="filter">
       <input
         type="text"
@@ -112,13 +131,16 @@
     <table>
       <tr>
         <th>Project ID</th>
-        <th>Total</th>
+        <th>Carbon Credits</th>
         <th>Date</th>
-        <th>Notes</th>
+        <th>Buyer Information</th>
       </tr>
       {#each salesSlice as sale}
         <tr>
-          <td>{sale.id}</td>
+          <td
+            ><a target="_blank" href={getURL(sale.id, sale.type)}>{sale.id}</a
+            ></td
+          >
           <td>{sale.total.toLocaleString()}</td>
           <td>{sale.date}</td>
           <td>{sale.notes}</td>
@@ -143,6 +165,9 @@
     padding: 10px;
     vertical-align: top;
   }
+  th {
+    white-space: nowrap;
+  }
   .project-container {
     display: grid;
     grid-template-columns: 200px minmax(0, 1fr);
@@ -153,8 +178,12 @@
     padding-right: 1rem;
     border-right: 1px solid var(--fg);
   }
-  .filter {
+  .filter,
+  .help {
     margin-bottom: 1.5rem;
+  }
+  .help {
+    font-size: 0.9em;
   }
   label,
   select,

@@ -10,7 +10,7 @@ const _sales = values.map((v) => {
     date: v[1],
     notes: v[2] + "",
     total: v[3],
-    type: registries[v[4]],
+    type: v[4],
   };
 });
 
