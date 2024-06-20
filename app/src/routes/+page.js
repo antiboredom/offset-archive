@@ -1,30 +1,42 @@
-import offsetData from "../data.json";
-
+let offsetData;
+let loaded = false;
 const methodologies = {};
 const projectTypes = {};
-offsetData.forEach((p, i) => {
-  p.id = i;
 
-  if (!p.name) p.name = "No Name";
-  if (!p.description) p.description = "No Description";
+async function loadData(fetch) {
+  if (loaded) {
+    return true;
+  }
 
-  const pMethodologies = p.methodology
-    ? p.methodology.split(";").map((m) => m.trim())
-    : ["Unknown"];
-  const pTypes = p.project_type
-    ? p.project_type.split(";").map((m) => m.trim())
-    : ["Unknown"];
+  let response = await fetch("/data.json");
+  offsetData = await response.json();
 
-  pMethodologies.forEach((m) => {
-    methodologies[m] = methodologies[m] ? methodologies[m] + 1 : 1;
+  offsetData.forEach((p, i) => {
+    p.id = i;
+
+    if (!p.name) p.name = "No Name";
+    if (!p.description) p.description = "No Description";
+
+    const pMethodologies = p.methodology
+      ? p.methodology.split(";").map((m) => m.trim())
+      : ["Unknown"];
+    const pTypes = p.project_type
+      ? p.project_type.split(";").map((m) => m.trim())
+      : ["Unknown"];
+
+    pMethodologies.forEach((m) => {
+      methodologies[m] = methodologies[m] ? methodologies[m] + 1 : 1;
+    });
+
+    pTypes.forEach((t) => {
+      projectTypes[t] = projectTypes[t] ? projectTypes[t] + 1 : 1;
+    });
   });
+  loaded = true;
+}
 
-  pTypes.forEach((t) => {
-    projectTypes[t] = projectTypes[t] ? projectTypes[t] + 1 : 1;
-  });
-});
-
-export async function load({ url }) {
+export async function load({ url, fetch }) {
+  await loadData(fetch);
   let start = url.searchParams.get("start") || 0;
   start = +start;
   if (start < 0 || !start) start = 0;

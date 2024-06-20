@@ -1,18 +1,4 @@
-// import salesData from "../../sales.json";
-//
-// const { headers, values } = salesData;
-
 const registries = ["Gold Standard", "Verra", "American Carbon Registry"];
-
-// const _sales = values.map((v) => {
-//   return {
-//     id: v[0],
-//     date: v[1],
-//     notes: v[2] + "",
-//     total: v[3],
-//     type: v[4],
-//   };
-// });
 
 let salesData;
 let headers;
