@@ -1,4 +1,4 @@
-import salesData from "../../all_sales.json";
+import salesData from "../../sales.json";
 
 const { headers, values } = salesData;
 
