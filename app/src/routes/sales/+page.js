@@ -49,9 +49,6 @@ export async function load({ url }) {
       if (q == "") {
         return true;
       }
-
-      console.log(p.notes);
-
       return p.notes.toLowerCase().indexOf(q.toLowerCase()) > -1;
     });
   // .filter((p) => {
