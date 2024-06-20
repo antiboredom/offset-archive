@@ -61,6 +61,7 @@ export async function load({ url }) {
       }
 
       return (
+        p.registry_id == q ||
         p.name.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
         p.description.toLowerCase().indexOf(q.toLowerCase()) > -1
       );

@@ -49,7 +49,7 @@ export async function load({ url }) {
       if (q == "") {
         return true;
       }
-      return p.notes.toLowerCase().indexOf(q.toLowerCase()) > -1;
+      return p.id == q || p.notes.toLowerCase().indexOf(q.toLowerCase()) > -1;
     });
   // .filter((p) => {
   //   if (methodologyFilter === null) return true;
