@@ -3,9 +3,10 @@ import pandas as pd
 import american_carbon
 import gold_standard
 import verra
+import car
 import methodologies
 
-providers = [verra, gold_standard, american_carbon]
+providers = [verra, gold_standard, american_carbon, car]
 
 FINAL = "offsets.csv"
 FINAL_JSON = "offsets.json"

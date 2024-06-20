@@ -33,8 +33,9 @@ def combine_data(local_name="sales_data.zip"):
 
     all = pd.concat(all)
     # headers = ["project_id", "project_name", "total", "date", "details"]
-    headers = ["id", "total", "date", "details"]
+    headers = ["id", "date", "details", "total", "type"]
     all = all[headers]
+    all["date"] = pd.to_datetime(all["date"], format="mixed")
     all.dropna(inplace=True)
     all.to_csv("data/all_sales.csv", index=False)
 
@@ -42,23 +43,32 @@ def combine_data(local_name="sales_data.zip"):
     values = all.values.tolist()
 
     with open("data/all_sales.json", "w") as outfile:
-        json.dump({'headers': headers, 'values': values}, outfile)
+        json.dump({"headers": headers, "values": values}, outfile)
 
 
 def parse_gold(fname):
     print("GOLD")
     # headers: ['Vintage', 'Credit Status', 'Quantity', 'GSID', 'Project Name', 'Project Developer', 'Country', 'Product Type', 'Project Type', 'Methodology', 'Programme of Activities', 'POA GSID', 'Issuance Date', 'Retirement Date', 'Monitoring Period Start', 'Monitoring Period End', 'Serial Number', 'Note', 'Eligible for CORSIA?', 'Retired for CORSIA?', 'CORSIA Authorisation', 'Aeroplane Operator Name']
     df = pd.read_csv(fname)
-    df = df[["GSID", "Project Name", "Quantity", "Retirement Date", "Note"]]
+    df = df[
+        [
+            "GSID",
+            # "Project Name",
+            "Quantity",
+            "Retirement Date",
+            "Note",
+        ]
+    ]
     df = df.rename(
         columns={
-            "Project Name": "project_name",
+            # "Project Name": "project_name",
             "Retirement Date": "date",
             "Note": "details",
             "GSID": "id",
             "Quantity": "total",
         }
     )
+    df["type"] = 0
     return df
 
 
@@ -69,7 +79,7 @@ def parse_acr(fname):
     df = df[
         [
             "Project ID",
-            "Project Name",
+            # "Project Name",
             "Quantity of Credits",
             "Status Effective",
             "Retirement Reason Details",
@@ -77,13 +87,14 @@ def parse_acr(fname):
     ]
     df = df.rename(
         columns={
-            "Project Name": "project_name",
+            # "Project Name": "project_name",
             "Status Effective": "date",
             "Retirement Reason Details": "details",
             "Project ID": "id",
             "Quantity of Credits": "total",
         }
     )
+    df["type"] = 2
     return df
 
 
@@ -94,7 +105,7 @@ def parse_car(fname):
     df = df[
         [
             "Project ID",
-            "Project Name",
+            # "Project Name",
             "Quantity of Offset Credits",
             "Status Effective",
             "Retirement Reason Details",
@@ -102,13 +113,14 @@ def parse_car(fname):
     ]
     df = df.rename(
         columns={
-            "Project Name": "project_name",
+            # "Project Name": "project_name",
             "Status Effective": "date",
             "Retirement Reason Details": "details",
             "Project ID": "id",
             "Quantity of Offset Credits": "total",
         }
     )
+    df["type"] = 3
     return df
 
 
@@ -119,7 +131,7 @@ def parse_verra(fname):
     df = df[
         [
             "ID",
-            "Name",
+            # "Name",
             "Quantity Issued",
             "Issuance Date",
             "Retirement Details",
@@ -127,13 +139,14 @@ def parse_verra(fname):
     ]
     df = df.rename(
         columns={
-            "Name": "project_name",
+            # "Name": "project_name",
             "Issuance Date": "date",
             "Retirement Details": "details",
             "ID": "id",
             "Quantity Issued": "total",
         }
     )
+    df["type"] = 1
     return df
 
 
@@ -151,7 +164,6 @@ PARSERS = {
 }
 
 
-
 if __name__ == "__main__":
-    # download_raw()
+    download_raw()
     combine_data()

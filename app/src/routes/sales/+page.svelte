@@ -14,7 +14,10 @@
     "https://registry.goldstandard.org/projects/details/",
     "https://registry.verra.org/app/projectDetail/VCS/",
     "https://acr2.apx.com/mymodule/reg/prjView.asp?id1=",
+    "https://thereserve2.apx.com/mymodule/reg/prjView.asp?id1=",
   ];
+
+  // const REGS = ["Gold", "Verra", "ACR"];
 
   const sortKeys = [
     { key: "notes", text: "Buyer Information" },
@@ -56,6 +59,9 @@
   function getURL(id, type) {
     if (type == 2) {
       id = id.replace("ACR", "");
+    }
+    if (type == 3) {
+      id = id.replace("CAR", "");
     }
     return URLS[type] + id;
   }
@@ -130,9 +136,10 @@
     </div>
     <table>
       <tr>
-        <th>Project ID</th>
-        <th>Carbon Credits</th>
-        <th>Date</th>
+        <th width="10%">Project ID</th>
+        <!-- <th>Registry</th> -->
+        <th width="10%">Carbon Credits</th>
+        <th width="10%">Date</th>
         <th>Buyer Information</th>
       </tr>
       {#each salesSlice as sale}
@@ -141,6 +148,7 @@
             ><a target="_blank" href={getURL(sale.id, sale.type)}>{sale.id}</a
             ></td
           >
+          <!-- <td>{REGS[sale.type]}</td> -->
           <td>{sale.total.toLocaleString()}</td>
           <td>{sale.date}</td>
           <td>{sale.notes}</td>
@@ -166,7 +174,10 @@
     vertical-align: top;
   }
   th {
-    white-space: nowrap;
+    /* white-space: nowrap; */
+  }
+  td {
+    overflow-wrap: anywhere;
   }
   .project-container {
     display: grid;

@@ -151,7 +151,7 @@ def merge():
             registry_id=p["Project ID"],
             total_credits=total,
             description=p["description"],
-            status=p["Voluntary Status"] + "; " + p["ARB Status"],
+            status=p["Voluntary Status"],
             registry_url=registry_url,
             developer=p["Project Developer"],
             project_type=p["Project Type"],
