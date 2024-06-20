@@ -1,5 +1,5 @@
 <script>
-  import {registryNames} from "$lib/registries.js";
+  import { registryNames } from "$lib/registries.js";
   export let offset;
   export let q;
 
@@ -45,15 +45,15 @@
 
     <div class="item">
       <span class="label">Registry:</span>
-      <span class="value"
-        ><a href={offset.registry_url} target="_blank">{registryNames[offset.registry]}</a
-        ></span
-      >
+      <span class="value">{registryNames[offset.registry]}</span>
     </div>
 
     <div class="item">
       <span class="label">ID:</span>
-      <span class="value">{offset.registry_id}</span>
+      <span class="value"
+        ><a href={offset.registry_url} target="_blank">{offset.registry_id}</a
+        ></span
+      >
     </div>
   </div>
 
