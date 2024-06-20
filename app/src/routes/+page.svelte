@@ -5,6 +5,8 @@
 
   export let data;
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   let q = data.q;
   let start = data.start;
   let count = data.count;
@@ -17,7 +19,7 @@
   let projectTypes = data.projectTypes;
   let form;
   let loading = false;
-  let showFilters = true;
+  let showFilters = !isMobile;
   let shouldAutoFocus = false;
 
   $: offsetsSlice = data.offsetsSlice;
